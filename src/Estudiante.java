@@ -20,7 +20,7 @@ public class Estudiante {
     }
 
     public void setNombre(String nombre) {
-        if (nombre.isBlank() || nombre == null) {
+        if (nombre == null || nombre.isBlank()) {
             return;
         }
         this.nombre = nombre;

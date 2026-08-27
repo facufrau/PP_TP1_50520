@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class EventoUniversitario {
     private final String id;
@@ -121,9 +121,30 @@ public class EventoUniversitario {
     }
 
     // Metodo crear Actividad
-    public void crearActividad(int idnum, String titulo, int cupo) {
-        Actividad actividad = new Actividad(idnum, titulo, cupo);
-        this.actividades.add(actividad);
+    public void crearActividad(int idnum, String titulo, int cupo, String tipo) {
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Se creará la actividad ---> " + tipo);
+
+        switch (tipo) {
+            case "charla":
+                System.out.println("Ingrese el disertante: ");
+                String disertante = reader.nextLine();
+                Actividad charla = new Charla(idnum, titulo, cupo, disertante);
+                this.actividades.add(charla);
+                break;
+            case "taller:":
+                System.out.println("El taller " + titulo + "requiere notebook? si/no ?");
+                String reqNotebookRespuesta = reader.nextLine().trim().toLowerCase();
+                boolean requiereNotebook = false;
+                if (reqNotebookRespuesta.startsWith("s")) {
+                    requiereNotebook = true;
+                }
+                Actividad taller = new Taller(idnum, titulo, cupo, requiereNotebook);
+                this.actividades.add(taller);
+                break;
+            default:
+                System.out.println("ERROR: Actividad no válida");
+        }
     }
 
     // Retornar la lista de las actividades disponibles

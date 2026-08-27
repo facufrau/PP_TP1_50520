@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.List;
 
-public class Actividad {
+public abstract class Actividad {
     private int id;
     private String titulo;
     private int cupoMaximo;
@@ -41,7 +41,7 @@ public class Actividad {
     }
 
     public void setTitulo(String titulo) {
-        if (titulo != null || titulo.isBlank()) {
+        if (titulo == null || titulo.isBlank()) {
             return;
         }
         this.titulo = titulo;
@@ -75,5 +75,14 @@ public class Actividad {
             System.out.println("  " + inscripcion.getFecha() + " -- " + inscripcion.getEstado() + " -- " + inscripcion.getEstudiante().getNombre() + " -- (Legajo: " + inscripcion.getEstudiante().getLegajo() + ")");
         }
     }
+
+    // Método mostrar Identificacion final
+    public final void mostrarIdentificacion() {
+        System.out.println("---> " + getTipo() + ": " + this.titulo + " --- id = " + this.id + " --- Cupo máximo = " + this.cupoMaximo);
+    }
+
+    // Métodos abstractos
+    public abstract double calcularCostoMateriales();
+    public abstract String getTipo();
 }
 
