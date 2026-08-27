@@ -1,10 +1,25 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class EventoUniversitario {
     private final String id;
     private String titulo;
     private double costoBase;
     private boolean gratuito;
-    private static int cantidadEventos;
+
+    // Clases relacionadas
     private Sala sala;
+    private List<Actividad> actividades;
+
+    // Variables de clase
+    private static int cantidadEventos;
+
+    // Inicializador estático
+    static {
+        cantidadEventos = 0;
+        System.out.println("Cantidad de eventos inicializado a: " + cantidadEventos);
+    }
 
     public EventoUniversitario(double costoBase, boolean gratuito, String titulo) {
         cantidadEventos++;
@@ -12,6 +27,8 @@ public class EventoUniversitario {
         setGratuito(gratuito);
         this.id = String.valueOf(cantidadEventos);
         setTitulo(titulo);
+
+        this.actividades = new ArrayList<>();
     }
 
     public EventoUniversitario(EventoUniversitario otro) {
@@ -22,7 +39,6 @@ public class EventoUniversitario {
         setTitulo(otro.titulo);
     }
 
-
     // Get-Set Titulo
     public void setTitulo(String nombre) {
         if (nombre != null && !nombre.isBlank()){
@@ -32,6 +48,10 @@ public class EventoUniversitario {
 
     public String getTitulo() {
         return this.titulo;
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     // Get-Set Costo Base
@@ -54,6 +74,10 @@ public class EventoUniversitario {
         return gratuito;
     }
 
+    public Sala getSala() {
+        return sala;
+    }
+
     // Mostrar Datos
     public void mostrarDatos() {
         System.out.println("______________________________________________________________________________________________");
@@ -65,6 +89,13 @@ public class EventoUniversitario {
         String salaNombre = this.sala.getNombre();
         if (!salaNombre.isBlank() && salaNombre != null){
             System.out.println("Sala Asignada= " + salaNombre);
+        }
+
+        System.out.println("Actividades:");
+        System.out.println("____________");
+        for (Actividad actividad : actividades) {
+            System.out.println("- " + actividad.getTitulo() + " (id=" + actividad.getId() + ")" + " - Cupo máximo: " + actividad.getCupoMaximo());
+            actividad.mostrarInscripciones();
         }
         System.out.println("______________________________________________________________________________________________");
 
@@ -84,18 +115,21 @@ public class EventoUniversitario {
         return costoBase * 1.21;
     }
 
-    // Metodo crear Actividad
-    public void crearActividad(int idnum, String titulo, int cupo) {
-    }
-
     // Metodo asignar sala
-     public void asignarSala(Sala sala) {
+    public void asignarSala(Sala sala) {
         this.sala = sala;
     }
 
-    static {
-        cantidadEventos = 0;
-        System.out.println("Cantidad de eventos inicializado a: " + cantidadEventos);
+    // Metodo crear Actividad
+    public void crearActividad(int idnum, String titulo, int cupo) {
+        Actividad actividad = new Actividad(idnum, titulo, cupo);
+        this.actividades.add(actividad);
+    }
+
+    // Retornar la lista de las actividades disponibles
+    public List<Actividad> getActividades() {
+        // Permite modificarlas desde afuera ya que devuelve la lista completa
+        return actividades;
     }
 
 }

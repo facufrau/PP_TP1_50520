@@ -5,10 +5,14 @@ public class Actividad {
     private int id;
     private String titulo;
     private int cupoMaximo;
-    private static final int CUPO_MINIMO;
 
+    // Lista / colección para guardar inscripciones
     private List<Inscripcion> inscripciones;
 
+    // Variable de clase
+    private static final int CUPO_MINIMO;
+
+    // Inicializador estático
     static {
         CUPO_MINIMO = 15;
         System.out.println("Se inicializó la variable CUPO MINIMO a " + CUPO_MINIMO);
@@ -24,11 +28,52 @@ public class Actividad {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        if (titulo != null || titulo.isBlank()) {
+            return;
+        }
+        this.titulo = titulo;
+    }
+
+    public int getCupoMaximo() {
+        return cupoMaximo;
+    }
+
+    public void setCupoMaximo(int cupo) {
+        this.cupoMaximo = (cupo < CUPO_MINIMO) ? cupo : CUPO_MINIMO;
+    }
+
     public Inscripcion inscribir(Estudiante estudiante){
         Inscripcion inscripcion = new Inscripcion(LocalDate.now(), "Registrada", this, estudiante);
         inscripciones.add(inscripcion);
 
         return inscripcion;
+    }
+
+    public List<Inscripcion> getInscripciones() {
+        return inscripciones;
+    }
+
+    public void mostrarInscripciones(){
+        if (inscripciones.isEmpty()) {
+            System.out.println("Sin inscripciones registradas.");
+        }
+        System.out.println("Inscripciones :");
+        for (Inscripcion inscripcion : inscripciones) {
+            System.out.println("  " + inscripcion.getFecha() + " -- " + inscripcion.getEstado() + " -- " + inscripcion.getEstudiante().getNombre() + " -- (Legajo: " + inscripcion.getEstudiante().getLegajo() + ")");
+        }
     }
 }
 

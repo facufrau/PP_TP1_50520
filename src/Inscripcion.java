@@ -28,4 +28,16 @@ public class Inscripcion {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public Actividad getActividad() {
+        return actividad;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void confirmar() {
+        this.estado = "Confirmada";
+    }
 }
