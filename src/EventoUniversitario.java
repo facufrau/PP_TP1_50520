@@ -101,7 +101,7 @@ public class EventoUniversitario {
 
     }
 
-    public void mostrarEventosTotales() {
+    public static void mostrarEventosTotales() {
         System.out.println("**********************\nEventos Totales: "+ getCantidadEventos() + "\n**********************");
     }
 
@@ -112,7 +112,15 @@ public class EventoUniversitario {
 
     // Calcular costo estimado
     public double calcularCostoestimado() {
-        return costoBase * 1.21;
+        if (this.gratuito) {
+            return 0.0;
+        }
+
+        double costoEstimado = costoBase;
+        for (Actividad actividad : actividades) {
+            costoEstimado += actividad.calcularCostoMateriales();
+        }
+        return costoEstimado * 1.21;
     }
 
     // Metodo asignar sala
@@ -132,8 +140,8 @@ public class EventoUniversitario {
                 Actividad charla = new Charla(idnum, titulo, cupo, disertante);
                 this.actividades.add(charla);
                 break;
-            case "taller:":
-                System.out.println("El taller " + titulo + "requiere notebook? si/no ?");
+            case "taller":
+                System.out.println("El taller " + titulo + " requiere notebook? si/no ?");
                 String reqNotebookRespuesta = reader.nextLine().trim().toLowerCase();
                 boolean requiereNotebook = false;
                 if (reqNotebookRespuesta.startsWith("s")) {

@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Actividad {
@@ -26,6 +27,7 @@ public abstract class Actividad {
         } else {
             this.cupoMaximo = CUPO_MINIMO;
         }
+        this.inscripciones = new ArrayList<>();
     }
 
     public int getId() {
